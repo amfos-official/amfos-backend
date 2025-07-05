@@ -11,6 +11,12 @@ This is the backend server for the AMFOS application, built with Node.js and Exp
 
 1. Clone the repository and navigate to the `amfos-backend` directory.
 
+```bash
+git clone https://github.com/amfos-official/amfos-backend.git
+cd amfos-backend
+```
+
+
 2. Install the dependencies:
 
 ```bash
