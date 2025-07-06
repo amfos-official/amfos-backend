@@ -86,18 +86,19 @@ export const saveAppointment = async (req, res) => {
 
   // Keep only the latest MAX_APPOINTMENTS appointments
   if (appointments.length >= MAX_APPOINTMENTS) {
-    appointments.shift(); // Remove the oldest appointment
+    appointments.shift();
   }
   appointments.push(appointment);
 
-  try {
-    await sendAppointmentEmails(appointment);
-    return res.status(201).json({ success: true, message: 'Appointment saved and emails sent', appointment });
-  } catch (error) {
-    console.error('Error sending emails:', error);
-    return res.status(500).json({ success: false, message: 'Appointment saved but failed to send emails' });
-  }
+  // ✅ Respond immediately
+  res.status(201).json({ success: true, message: 'Appointment saved', appointment });
+
+  // 📤 Then send emails in background
+  sendAppointmentEmails(appointment).catch(error => {
+    console.error('Email sending failed:', error);
+  });
 };
+
 
 /**
  * Get all appointments (for testing)
